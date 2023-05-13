@@ -4,7 +4,7 @@ from streamlit.components.v1 import html
 from streamlit_option_menu import option_menu
 import buyer
 import seller
-import search
+import review_selection
 import pandas as pd
 from pathlib import Path
 from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode,DataReturnMode
@@ -39,18 +39,29 @@ usrs = ['username']
 pwrd = ['123456789']
 
 def app():
-    st.title('Buyers Please Welcome')
-    st.write('Welcome to your Blockchain based car buying platform')
-    search.app()
+    
+    key_df = pd.read_csv(Path("./state.csv"), dtype=str)
+    keystate = key_df.iloc[0]['state']
 
-            
-
-
+    placeholder = st.empty()
+    if keystate =='second':
+        with placeholder.form("login"):
+            st.markdown("#### Enter your credentials")
+            usr = st.text_input("Username")
+            password = st.text_input("Password", type="password")
+            submit = st.form_submit_button("Login")
+        
+        if submit and usr == 'Tom' and password == '123456':
+            st.success("Login Successful")
+            key_df.iloc[0]['state'] = 'third'
+            key_df.to_csv(Path("./state.csv"), index=False)
+            keystate = key_df.iloc[0]['state']
+            review_selection.app() 
+        elif submit and usr != 'Tom':
+            st.error("Login Failed")
+        elif submit and password != '123456':
+            st.error("Login Failed")
+        
 
     
-    # #read to db 
-# conn = sqlite3.connect('vehicles.db')
-# #vehicles_df = pd.read_csv(Path("./vehicles.csv"), dtype=str)
-# vehicles_df = vehicles_df[["id","price","year","model","odometer","cylinders","paint_color","type","state"]]
-# vehicles_df.to_sql('vehicles', conn, if_exists='append', index = False)
-
+    
