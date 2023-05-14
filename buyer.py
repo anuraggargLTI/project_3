@@ -83,7 +83,7 @@ eth_node_url = 'https://mainnet.infura.io/v3/YOUR_INFURA_API_KEY'
 w3 = Web3(Web3.HTTPProvider(eth_node_url))
 
 # Replace with your smart contract ABI and address
-contract_abi = json.loads([
+contract_abi = json.loads [
 	{
 		"inputs": [
 			{
@@ -212,7 +212,7 @@ contract_abi = json.loads([
 		"stateMutability": "view",
 		"type": "function"
 	}
-])
+]
 contract_address = 'CONTRACT_ADDRESS'
 
 # Replace with your private key and public address
