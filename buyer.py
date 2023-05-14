@@ -79,7 +79,7 @@ import json
 from web3 import Web3
 
 # Replace with your Ethereum node URL
-eth_node_url = 'https://mainnet.infura.io/v3/YOUR_INFURA_API_KEY'
+eth_node_url = 'https://mainnet.infura.io/v3/INFURA_API_KEY'
 w3 = Web3(Web3.HTTPProvider(eth_node_url))
 
 # Replace with your smart contract ABI and address
