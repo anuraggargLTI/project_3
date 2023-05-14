@@ -246,5 +246,7 @@ def buy_car(car_id):
     return txn_hash.hex()
 
 # Get the remaining balance using the 'getRemainingBalance' function
+
 def get_remaining_balance():
-    remaining_balance = contract.functions.getRemainingBalance().call({'from': my
+    remaining_balance = contract.functions.getRemainingBalance().call({'from': my_address})
+    return remaining_balance
