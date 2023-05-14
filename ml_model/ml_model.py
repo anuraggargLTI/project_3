@@ -2,19 +2,17 @@ from pathlib import Path
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
-from sklearn.metrics import mean_absolute_error
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 import numpy as np
 
-
-import streamlit as st
 
 
 
 def ml_function(odometer, year, model_name):
     cars_df = pd.read_csv(Path("ml_model/used_cars_data.csv"), parse_dates=True, infer_datetime_format=True)
     cars_df = cars_df[['mileage','year','model_name','price']]
+    cars_df.dropna(inplace=True)
     categorical_variables = list(cars_df.dtypes[cars_df.dtypes == "object"].index)
     enc = OneHotEncoder(sparse=False, handle_unknown='ignore')
     encoded_data = enc.fit_transform(cars_df[categorical_variables])
@@ -39,4 +37,5 @@ def ml_function(odometer, year, model_name):
     new_carscleaned_df = pd.concat([new_numerical_variables_df,encoded_df],axis=1)
     input_test_scaled = X_scaler.transform(new_carscleaned_df)
     prediction = model.predict(input_test_scaled)
-    return prediction
+    formatted_prediction = "The estimated selling price of your car is ${:,.0f}".format(prediction[0])
+    return formatted_prediction

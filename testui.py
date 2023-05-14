@@ -4,9 +4,7 @@ from pathlib import Path
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from xgboost import XGBRegressor
-from sklearn.metrics import mean_absolute_error
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import StandardScaler
+
 import numpy as np
 
 import streamlit as st
