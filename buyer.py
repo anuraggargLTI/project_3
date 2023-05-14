@@ -45,14 +45,34 @@ def app():
 
             
 
-
-
     
     # #read to db 
 # conn = sqlite3.connect('vehicles.db')
 # #vehicles_df = pd.read_csv(Path("./vehicles.csv"), dtype=str)
 # vehicles_df = vehicles_df[["id","price","year","model","odometer","cylinders","paint_color","type","state"]]
 # vehicles_df.to_sql('vehicles', conn, if_exists='append', index = False)
+
+
+def app():
+    st.title('Buyers Please Welcome')
+    st.write('Welcome to your Blockchain based car buying platform')
+    search.app()
+
+    car_id = st.number_input('Enter the Car ID to buy:', min_value=0, step=1)
+    buy_button = st.button('Buy Car')
+
+    if buy_button:
+        if car_id:
+            txn_hash = buy_car(car_id)
+            st.write(f"Transaction sent! Transaction hash: {txn_hash}")
+        else:
+            st.error("Please enter a valid Car ID.")
+
+    balance_button = st.button('Check Remaining Balance')
+    
+    if balance_button:
+        balance = get_remaining_balance()
+        st.write(f"Your remaining balance: {balance} (in wei)")
 
 
 import json
