@@ -5,6 +5,7 @@ from streamlit_option_menu import option_menu
 import buyer
 import seller
 import buy_selection
+from ml_model import ml_model
 import pandas as pd
 from pathlib import Path
 from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode,DataReturnMode
@@ -37,14 +38,16 @@ CAR_DES_HTML_TEMP = """
 # usernames and passwords >>>> HAS TO BE WRITTEN TO ANOTHER FILE EVENTUALLY AND THEN READ IN HERE 
 usrs = ['username']
 pwrd = ['123456789']
-
+estimated_price=""
 def app():
-    st.header("Review Your Selections")
+    st.header("Welcome Tom , Review Your Selections")
 
     key_df = pd.read_csv(Path("./state.csv"), dtype=str)
     keystate = key_df.iloc[0]['state']
 
-    if keystate == 'third':
+    if keystate != '':
+       # st.subheader("Welcome", st.session_state.usr)
+       # st.subheader("Welcome Tom")
         for key in st.session_state.keys():
                 vehicles_df = pd.read_csv(Path("./vehicles.csv"), dtype=str)
                 df = pd.DataFrame(columns = vehicles_df.columns)
@@ -58,11 +61,29 @@ def app():
                             st.markdown(CAR_HTML_TEMPLATE.format("UNKNOWN MODEL", "$" + str(x["price"]), "Location: " + x["state"].upper(), x["id"]), unsafe_allow_html=True)
                         with st.expander("Description"):
                             stc.html(CAR_DES_HTML_TEMP.format(x["description"]), scrolling=True)
-        key_df.iloc[0]['state'] = 'fourth'
-        key_df.to_csv(Path("./state.csv"), index=False)
+        if st.button("Estimate the Price"):
+            estimated_price = ml_model.ml_function(x["odometer"],x["year"],x["model"])
+            st.write(estimated_price)  
+       # if st.button("Convert the price to ETH"):
+       #     if estimated_price!="":
+       #         estimated_price = "100 ETH"
+       #     else:
+       #         estimated_price="50 ETH"
+
         if st.button("Buy Selections"):
-            #st.empty()
+            key_df.iloc[0]['state'] = "third"
+            key_df.to_csv(Path("./state.csv"), index=False)
+            #st.write(key_df)
             buy_selection.app()
+        #if st.button("Return to Search"):
+        #    for key in st.session_state.keys():
+        #        if len(key) == 10:
+        #            del st.session_state[key]
+        #    key_df.iloc[0]['state'] = 'first'
+
+        #st.write(key_df)
+        #key_df.to_csv(Path("./state.csv"), index=False)
+
 
 
     

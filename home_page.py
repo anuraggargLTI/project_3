@@ -4,10 +4,16 @@ from streamlit.components.v1 import html
 from streamlit_option_menu import option_menu
 import buyer
 import seller
+import login
+import buy_selection
+import review_selection
+import search
 import pandas as pd
 from pathlib import Path
 from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode,DataReturnMode
 #import sqlite3
+
+
 
 
 # hides streamlit logos
@@ -21,7 +27,8 @@ st.markdown(hide_default_format, unsafe_allow_html=True)
 #pages
 PAGES = {
     "For Buyers": buyer,
-    "For Sellers": seller
+    "For Sellers": seller, 
+  # "Login": login
 }
 
 # html templates
@@ -45,7 +52,7 @@ CAR_DES_HTML_TEMP = """
 
 with st.sidebar:
         choose = option_menu("Navigation", list(PAGES.keys()),
-                         icons=['arrow-right-circle', 'arrow-right-circle'],
+                         icons=['arrow-right-circle', 'arrow-right-circle', 'arrow-right-circle'],
                          menu_icon="dash", default_index=0,
                          styles={
         "container": {"padding": "5!important"},
@@ -56,4 +63,28 @@ with st.sidebar:
     )
 
 page = PAGES[choose]
+#key_df = pd.read_csv(Path("./state.csv"), dtype=str)
+#if key_df.iloc[0]['state']  == "first":
 page.app()
+#elif key_df.iloc[0]['state']  == "second":
+#     review_selection.app()
+#elif key_df.iloc[0]['state']  == "third":
+#    buy_selection.app()   
+#else:
+#    key_df.iloc[0]['state'] = 'first'
+#    key_df.to_csv(Path("./state.csv"), index=False)
+#    page.app()
+#if page == login:
+#        key_df.iloc[0]['state'] = 'second'
+#        key_df.to_csv(Path("./state.csv"), index=False)
+        #page.app()
+#        login.app()
+        #review_selection.app()
+#else:
+#        key_df.iloc[0]['state'] = 'first'
+#key_df.to_csv(Path("./state.csv"), index=False)
+#if key_df.iloc[0]['state']  == "second":
+#    review_selection.app()
+#if key_df.iloc[0]['state']  == "third":
+#    buy_selection.app()     
+

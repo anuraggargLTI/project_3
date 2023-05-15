@@ -2,18 +2,12 @@ import streamlit as st
 import streamlit.components.v1 as stc
 from streamlit.components.v1 import html
 from streamlit_option_menu import option_menu
-import buyer
-import seller
 import review_selection
+import buyer,seller
 import pandas as pd
 from pathlib import Path
 from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode,DataReturnMode
 #import sqlite3
-
-PAGES = {
-    "For Buyers": buyer,
-    "For Sellers": seller
-}
 
 # html templates
 CAR_HTML_TEMPLATE = """
@@ -34,34 +28,45 @@ CAR_DES_HTML_TEMP = """
 {}
 <div>"""
 
-# usernames and passwords >>>> HAS TO BE WRITTEN TO ANOTHER FILE EVENTUALLY AND THEN READ IN HERE 
-usrs = ['username']
-pwrd = ['123456789']
 
 def app():
     
     key_df = pd.read_csv(Path("./state.csv"), dtype=str)
     keystate = key_df.iloc[0]['state']
+    accounts_df = pd.read_csv(Path("./accounts.csv"), dtype=str)
+    
 
     placeholder = st.empty()
-    if keystate =='second':
+    if 'usr' not in st.session_state:
         with placeholder.form("login"):
             st.markdown("#### Enter your credentials")
             usr = st.text_input("Username")
             password = st.text_input("Password", type="password")
-            submit = st.form_submit_button("Login")
+            submit = st.form_submit_button("Log Me in")
         
-        if submit and usr == 'Tom' and password == '123456':
-            st.success("Login Successful")
-            key_df.iloc[0]['state'] = 'third'
-            key_df.to_csv(Path("./state.csv"), index=False)
-            keystate = key_df.iloc[0]['state']
-            review_selection.app() 
-        elif submit and usr != 'Tom':
-            st.error("Login Failed")
-        elif submit and password != '123456':
-            st.error("Login Failed")
-        
+            if submit:  ### based on accounts.csv now
+             st.write("hello")
+             mu = accounts_df["username"].str.contains(usr)
+             accounts_df = accounts_df[mu]
+             mp = accounts_df["password"].str.contains(password)
+             accounts_df = accounts_df[mp]
+             if len(accounts_df) != 0: 
+                st.success("Login Successful")
+             st.session_state.usr = usr
+             if keystate=="fourth":
+                 seller.app()
+             #key_df.iloc[0]["state"] = "second"
+             #key_df.to_csv(Path("./state.csv"), index=False)
+             #buyer.app()
+           # if st.session_state['in_search'] == 'True':
+        #    if 'in_search' not in st.session_state:
+        #            key_df.iloc[0]['state'] = 'second'
+        #            key_df.to_csv(Path("./state.csv"), index=False)
 
+        #elif submit:
+        #    st.error("Login Failed")
+    #else:
+    #    if st.button("Logout"):
+    #        del st.session_state['usr']
     
     

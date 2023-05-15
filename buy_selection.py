@@ -14,16 +14,25 @@ import csv
 
 
 def app():
-    key_df = pd.read_csv(Path("./state.csv"), dtype=str)
+    key_df = pd.read_csv("./state.csv", dtype=str)
     keystate = key_df.iloc[0]['state']
-
-    if keystate == 'fourth':
-        for key in st.session_state.keys():
+    #st.write(keystate)
+  #  if keystate == 'fourth':
+    for key in st.session_state.keys():
                 if len(key) == 10:
-                    vehicles_df = pd.read_csv(Path("./vehicles.csv"), dtype=str)
+                    vehicles_df = pd.read_csv("./vehicles.csv", dtype=str)
                     df = pd.DataFrame(columns = vehicles_df.columns)
                     for i in range(0,len(vehicles_df)):
                         line = vehicles_df.loc[[i]]
                         if str(key) == str(line.iloc[0]['id']) and str(line.iloc[0]['id']) != '':
                             x = line.iloc[0]
                             st.write(x)
+    key_df.iloc[0]['state'] = 'first'
+    key_df.to_csv("./state.csv", index=False)
+                            #st.write("finally here")
+
+       # if st.button("Return to Search"):
+       #     for key in st.session_state.keys():
+       #         del st.session_state[key]
+       #     key_df.iloc[0]['state'] = 'first'
+       #     key_df.to_csv("./state.csv", index=False)

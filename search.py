@@ -13,11 +13,6 @@ from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode,DataReturnMode
 import csv
 #import sqlite3
 
-PAGES = {
-    "For Buyers": buyer,
-    "For Sellers": seller
-}
-
 # html templates
 CAR_HTML_TEMPLATE = """
 <div style="color:white; width:100%; height:100%; margin:1px; padding:5px; position:sticky; border-radius:1px; border-bottom-right-radius: 1px;
@@ -37,16 +32,13 @@ CAR_DES_HTML_TEMP = """
 {}
 <div>"""
 
-# usernames and passwords >>>> HAS TO BE WRITTEN TO ANOTHER FILE EVENTUALLY AND THEN READ IN HERE 
-usrs = ['username']
-pwrd = ['123456789']
-
 def app():
     key_df = pd.read_csv(Path("./state.csv"), dtype=str)
     keystate = key_df.iloc[0]['state']
 
-    if keystate == 'first':
-        st.subheader("Find Your Car!")
+   # if keystate == 'first':
+    if keystate !="":
+        st.subheader("Welcome to Ferravana , blockchain based ferrari trading platform!")
         name = st.text_input("Search Ferraris", value="")
         vehicles_df = pd.read_csv(Path("./vehicles.csv"), dtype=str) 
 # filter from search 
@@ -105,17 +97,23 @@ def app():
                             st.markdown(CAR_HTML_TEMPLATE.format("UNKNOWN MODEL", "$" + str(row["price"]), "Location: " + row["state"].upper(), row["id"]), unsafe_allow_html=True)
                         with st.expander("Description"):
                             stc.html(CAR_DES_HTML_TEMP.format(row["description"]), scrolling=True)
-                    if st.button(label="Double Click to Check Out"):
-                        key_df.iloc[0] = 'second'
+                    if st.button(label="Check Out"):
+                        st.session_state['in_search'] = 'True'
+                        login.app()
+                        key_df.iloc[0]['state'] = 'second'
                         key_df.to_csv(Path("./state.csv"), index=False)
-                        keystate = key_df.iloc[0]
-                        st.write(keystate)
+                       # if 'usr' not in st.session_state:
+                          #  login.app()
+                            #review_selection.app()
 
-    elif keystate == 'second':
-         login.app()      
-
-    elif keystate == 'third':
-         review_selection.app() 
-
-    elif keystate == 'fourth':
-         buy_selection.app()
+                        #else:
+                        #    key_df.iloc[0]['state'] = 'second'
+                        #    key_df.to_csv(Path("./state.csv"), index=False)
+                        #    keystate = key_df.iloc[0]['state']
+                            #review_selection.app()
+    
+   # if keystate == 'second':
+                    
+   
+  #  if keystate == 'fourth':
+   #         buy_selection.app()

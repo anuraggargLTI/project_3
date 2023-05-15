@@ -4,21 +4,38 @@ from streamlit.components.v1 import html
 from streamlit_option_menu import option_menu
 import pandas as pd
 from pathlib import Path
+from ml_model import ml_model
+import login
 from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode,DataReturnMode
 #import sqlite3
 
 def app():
-    st.title('Sellers Please Welcome')
-    st.write('Welcome your blockchain based car buying platform')
+    if 'in_search' in st.session_state:
+        del st.session_state['in_search']
 
-    vehicles_df = pd.read_csv(Path("./vehicles.csv"),dtype=str)        
+        # clears selections from search 
+    for key in st.session_state.keys():
+          if len(key) == 10:
+                del st.session_state[key]
+    key_df = pd.read_csv(Path("./state.csv"), dtype=str)
+    keystate = key_df.iloc[0]['state']
+  
 
-    # st.write(vehicles_df['price'])                
+    vehicles_df = pd.read_csv(Path("./vehicles.csv"),dtype=str)
+    accounts_df = pd.read_csv(Path("./accounts.csv"), dtype=str)
 
-    st.subheader("Sell Your Car!")
-    st.write("Fill form below to add your car to our site.")
+    if keystate!="fourth":  
+       st.title('Sellers Please Welcome')
+       st.write('Welcome your blockchain based car buying platform')
+       key_df.iloc[0]['state'] = 'fourth'
+       key_df.to_csv(Path("./state.csv"), index=False)
+       login.app()
+    if keystate=="fourth":      
+      st.title("Welcome Tom , Sell your car here")
+      #st.subheader("Sell Your Car!")
+      st.write("Fill form below to add your car to our site.")
     
-    with st.form(key='Sell Your Car', clear_on_submit=True):    
+      with st.form(key='Sell Your Car', clear_on_submit=True):    
         idnum =st.text_input("10 Digit ID Number*")
         urlcode = st.text_input("URL*")
         region = st.text_input("Region", key = 'reg')
@@ -49,15 +66,20 @@ def app():
         lat = st.text_input("Latitude")
         long = st.text_input("Longitude")
         date = st.date_input("Posting Date")
+        
         if st.form_submit_button("Post Your Car!"):
           if idnum and price and year and model and odometer and condition and cylinders and color and type and state and des:
+            ### logs to vehicle
             vehicles_df.loc[len(vehicles_df)] = [idnum, urlcode, region, region_url, str(price), year, manufacturer, model, condition, cylinders, fuel, 
             odometer, title_status, transmission, vin, drive, size, type, color, image_url, des, county, state, lat, long, date]
             vehicles_df.to_csv(Path("./vehicles.csv"), index=False)
+            ### logs to user 
             st.success("Your Car is Now Listed!")
+            key_df.iloc[0]['state'] = 'first'
+            key_df.to_csv(Path("./state.csv"), index=False)
           else: 
              st.error("Please Make Sure to List: 10 Digit ID Number, Price, Year, Model, Condition, Odometer, Cylinders, Type, Paint Color, Description, and State")
-            
+      
 
     
 
