@@ -37,5 +37,6 @@ def ml_function(odometer, year, model_name):
     new_carscleaned_df = pd.concat([new_numerical_variables_df,encoded_df],axis=1)
     input_test_scaled = X_scaler.transform(new_carscleaned_df)
     prediction = model.predict(input_test_scaled)
-    formatted_prediction = "The estimated selling price of your car is ${:,.0f}".format(prediction[0])
+    #formatted_prediction = "The estimated selling price of your car is ${:,.0f}".format(prediction[0])
+    formatted_prediction = prediction[0]
     return formatted_prediction
