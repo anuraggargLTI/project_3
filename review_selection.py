@@ -40,7 +40,7 @@ usrs = ['username']
 pwrd = ['123456789']
 estimated_price=""
 def app():
-    st.header("Welcome Tom , Review Your Selections")
+    st.header("Welcome Tom , Review your Selection")
 
     key_df = pd.read_csv(Path("./state.csv"), dtype=str)
     keystate = key_df.iloc[0]['state']

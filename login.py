@@ -42,9 +42,11 @@ def app():
             st.markdown("#### Enter your credentials")
             usr = st.text_input("Username")
             password = st.text_input("Password", type="password")
+           # st.session_state['usr'] = usr
             submit = st.form_submit_button("Log Me in")
-        
+           # st.session_state['usr'] = usr
             if submit:  ### based on accounts.csv now
+             st.session_state['usr'] = usr
              st.write("hello")
              mu = accounts_df["username"].str.contains(usr)
              accounts_df = accounts_df[mu]
@@ -52,7 +54,7 @@ def app():
              accounts_df = accounts_df[mp]
              if len(accounts_df) != 0: 
                 st.success("Login Successful")
-             st.session_state.usr = usr
+             st.session_state['usr'] = usr
              if keystate=="fourth":
                  seller.app()
              #key_df.iloc[0]["state"] = "second"
