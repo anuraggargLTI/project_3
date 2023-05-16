@@ -7,6 +7,8 @@ from pathlib import Path
 from ml_model import ml_model
 import login
 from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode,DataReturnMode
+import random
+
 #import sqlite3
 
 def app():
@@ -35,12 +37,12 @@ def app():
       #st.subheader("Sell Your Car!")
       st.write("Fill form below to add your car to our site.")
     
-      with st.form(key='Sell Your Car', clear_on_submit=True):    
-        idnum =st.text_input("10 Digit ID Number*")
+      with st.form(key='Sell Your Car', clear_on_submit=False):    
+        idnum =st.text_input("10 Digit ID Number*",random.randint(1111111111, 9999999999))
         urlcode = st.text_input("URL*")
         region = st.text_input("Region", key = 'reg')
         region_url = st.text_input("Region URL")
-        price = st.number_input("Price*", step=1000, value=25000)
+        price = st.number_input("Price*")
         year = st.text_input("Year*")
         manufacturer = st.radio("Manufacturer", ['ferrari'])
         model = st.text_input("Model*")
@@ -66,7 +68,17 @@ def app():
         lat = st.text_input("Latitude")
         long = st.text_input("Longitude")
         date = st.date_input("Posting Date")
-        
+        estimated_price=""
+        if st.form_submit_button("Estimate the price of your car"):
+           if idnum and year and model and odometer :
+            estimated_price = ml_model.ml_function(odometer,year,model)
+            st.write(f"The estimated selling price of your car is {estimated_price}")
+           else:
+            st.error("Please Make Sure to provide: Year, Model, Odometer for us to estimate the price of your car!")
+
+  # if estimated_price!="":
+  #        if st.form_submit_button("Use this price"):
+  #           price = st.text_input("Price*",estimated_price)
         if st.form_submit_button("Post Your Car!"):
           if idnum and price and year and model and odometer and condition and cylinders and color and type and state and des:
             ### logs to vehicle
