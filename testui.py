@@ -66,8 +66,8 @@ if st.button("Get Balance"):
     balance_wei = contract.functions.getEtherBalance(student_account).call()
     st.write(balance_wei)
     # Convert the balance from Wei to Ether
-#    balance_eth = w3.fromWei(balance_wei, 'ether')
-#    st.write(f"Ether balance for {student_account}: {balance_eth}")
+    balance_eth = w3.fromWei(balance_wei, 'ether')
+    st.write(f"Ether balance for {student_account}: {balance_eth}")
 
 
 
