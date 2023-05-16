@@ -10,6 +10,8 @@ import review_selection
 import pandas as pd
 from pathlib import Path
 from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode,DataReturnMode
+import json
+from web3 import Web3
 #import sqlite3
 
 PAGES = {
@@ -87,4 +89,179 @@ def app():
 # #vehicles_df = pd.read_csv(Path("./vehicles.csv"), dtype=str)
 # vehicles_df = vehicles_df[["id","price","year","model","odometer","cylinders","paint_color","type","state"]]
 # vehicles_df.to_sql('vehicles', conn, if_exists='append', index = False)
+
+# Replace with your Ethereum node URL
+eth_node_url = 'HTTP://127.0.0.1:7545'
+w3 = Web3(Web3.HTTPProvider(eth_node_url))
+
+# Replace with your smart contract ABI and address
+contract_abi = json.loads('''
+[
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_tokenAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_currencyTokenAddress",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_carId",
+				"type": "uint256"
+			}
+		],
+		"name": "buyCar",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "carCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "cars",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "seller",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "currencyToken",
+		"outputs": [
+			{
+				"internalType": "contract IERC20",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getRemainingBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_price",
+				"type": "uint256"
+			}
+		],
+		"name": "listCar",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "token",
+		"outputs": [
+			{
+				"internalType": "contract IERC721",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+''')
+
+contract_address = '0x983417526CCCbb78bF8fEb226922C297aD9b054A'
+
+# Replace with your private key and public address
+private_key = '0xd67abb212b5ac17be94408dbdfc55b729310976df20480b38add7f3f61a7a623'
+my_address = '0x983417526CCCbb78bF8fEb226922C297aD9b054A'
+
+# Set up the contract object
+contract = w3.eth.contract(address=Web3.toChecksumAddress(contract_address), abi=contract_abi)
+
+# Buy a car using the 'buyCar' function
+def buy_car(car_id):
+    car = contract.functions.cars(car_id).call()
+    car_price = car[2]
+
+    nonce = w3.eth.getTransactionCount(my_address)
+    gas_price = w3.eth.gasPrice
+
+    # Replace with the amount of Ether you're willing to pay for gas
+    gas_limit = 200000
+
+    transaction = contract.functions.buyCar(car_id).buildTransaction({
+        'from': my_address,
+        'gas': gas_limit,
+        'gasPrice': gas_price,
+        'nonce': nonce,
+    })
+
+    signed_txn = w3.eth.account.signTransaction(transaction, private_key)
+    txn_hash = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
+
+    return txn_hash.hex()
+
+# Get the remaining balance using the 'getRemainingBalance' function
+def get_remaining_balance():
+    remaining_balance = contract.functions.getRemainingBalance().call({'from': my_address})
+    return remaining_balance
 
