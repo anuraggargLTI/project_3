@@ -5,7 +5,7 @@ from streamlit_option_menu import option_menu
 import pandas as pd
 from pathlib import Path
 from ml_model import ml_model
-import login
+import login,price_converter,connector
 from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode,DataReturnMode
 import random
 
@@ -72,7 +72,8 @@ def app():
         if st.form_submit_button("Estimate the price of your car"):
            if idnum and year and model and odometer :
             estimated_price = ml_model.ml_function(odometer,year,model)
-            st.write(f"The estimated selling price of your car is {estimated_price}")
+            estimated_price_eth=price_converter.getETHPrice(estimated_price)
+            st.write(f"The estimated selling price of your car is {estimated_price} and in ETH is : {estimated_price_eth}")
            else:
             st.error("Please Make Sure to provide: Year, Model, Odometer for us to estimate the price of your car!")
 
@@ -87,6 +88,8 @@ def app():
             vehicles_df.to_csv(Path("./vehicles.csv"), index=False)
             ### logs to user 
             st.success("Your Car is Now Listed!")
+            connector.sell_car(price_converter.getETHPrice(float(price)))
+            st.subheader(f"your new ETH balance is {connector.return_balance()}")
             key_df.iloc[0]['state'] = 'first'
             key_df.to_csv(Path("./state.csv"), index=False)
           else: 

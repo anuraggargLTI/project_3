@@ -5,7 +5,7 @@ from streamlit_option_menu import option_menu
 import buyer
 import seller
 import login
-import search
+import search,connector,price_converter
 import pandas as pd
 from pathlib import Path
 from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode,DataReturnMode
@@ -26,9 +26,11 @@ def app():
                         line = vehicles_df.loc[[i]]
                         if str(key) == str(line.iloc[0]['id']) and str(line.iloc[0]['id']) != '':
                             x = line.iloc[0]
-                            st.write(x)
+                            #st.write(x)
+                            connector.buy_car2(price_converter.getETHPrice(float(line.iloc[0]['price'])))
     key_df.iloc[0]['state'] = 'first'
     key_df.to_csv("./state.csv", index=False)
+    st.subheader(f"Congratulations on your purchase and your new ETH balance is {connector.return_balance()}")
                             #st.write("finally here")
 
        # if st.button("Return to Search"):

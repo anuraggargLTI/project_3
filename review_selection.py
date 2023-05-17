@@ -87,12 +87,14 @@ def app():
        #         estimated_price = "100 ETH"
        #     else:
        #         estimated_price="50 ETH"
-       
-        if st.button("Buy Selections"):
-            key_df.iloc[0]['state'] = "third"
-            key_df.to_csv(Path("./state.csv"), index=False)
+        if (connector.return_balance()>=price_converter.getETHPrice(current_car_price)):
+            if st.button("Buy Selections"):
+              key_df.iloc[0]['state'] = "third"
+              key_df.to_csv(Path("./state.csv"), index=False)
             #st.write(key_df)
-            buy_selection.app()
+              buy_selection.app()
+        else:
+            st.subheader("Tom,you do not have sufficient balance and our platform doesn't support Financing so please pick another car")
         if st.button("Click twice to go back to Home page"):
             #st.write(key_df)
             key_df.iloc[0]['state'] = "first"
