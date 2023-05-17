@@ -2,7 +2,7 @@
 
 
 ## Introduction
-The Ferrari Carvana using blockchain is an exclusive online marketplace specifically designed for luxury cars, with a focus on Ferrari models. It provides a seamless platform for buyers and sellers to connect and facilitate the purchase of luxury cars using cryptocurrency (ETH). The platform also incorporates a Machine Learning (ML) model for price prediction, enhancing the user experience and decision-making process.
+The Ferrari Carvana is an exclusive online marketplace specifically designed for luxury cars, with a focus on Ferrari models. It provides a seamless platform for buyers and sellers to connect and facilitate the purchase of luxury cars using cryptocurrency (ETH). The platform also incorporates a Machine Learning (ML) model for price prediction, enhancing the user experience and decision-making process.
 
 ## Features
 - Search and browse a curated selection of luxury cars, specifically Ferrari models.
