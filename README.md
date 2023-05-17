@@ -28,6 +28,21 @@ The Luxury Car Buying Platform utilizes the following technologies and framework
 2. Navigate to the project directory: `cd Ferrari Carvana using blockchain`
 3. Start the Streamlit server: `streamlit run app.py`
 4. Open your web browser and visit: `http://localhost:8501`
+5. Update the following environment variables in the `.env` file:
+   'USER_ADDRESS=0xf7895847Fd092df264C63a035AcC83203AD64344'
+   'THIRD_PARTY_ADDRESS=0x91e2B17bcc05021fD711352698E51898DCf64C09'
+   'WEB3_PROVIDER_URI=HTTP://127.0.0.1:7545'
+
+
+## Demo Credentials
+
+To access the demo features, you can use the following credentials:
+
+- Username: Tom
+- Password: 123456
+
+Please note that these are placeholder credentials used for demonstration purposes only. Do not use these credentials in a production environment. 
+
 
 ## Usage
 1. Upon launching the application, the Streamlit UI will be displayed in your web browser.
