@@ -49,7 +49,7 @@ def app():
         condition = st.radio("Condition*", options=['new','excellent','good','fair','poor'])
         cylinders = st.text_input("Cylinders*")
         fuel = st.radio("Fuel", ['gas', 'hybrid', 'electric', 'other'])
-        odometer = st.text_input("Odometer*", key ='odo')
+        odometer = st.number_input("Odometer*", key ='odo',step=10000)
         title_status = st.radio("Title Status", ['clean', 'rebuilt', 'salvage', 'other'])
         transmission = st.radio("Transmission", ['manual', 'automatic', 'other'])
         vin = st.text_input("VIN", key='vin')
@@ -73,7 +73,7 @@ def app():
            if idnum and year and model and odometer :
             estimated_price = ml_model.ml_function(odometer,year,model)
             estimated_price_eth=price_converter.getETHPrice(estimated_price)
-            st.write(f"The estimated selling price of your car is {estimated_price} and in ETH is : {estimated_price_eth}")
+            st.write(f"The estimated selling price of your car in USD is {estimated_price} and in ETH is : {estimated_price_eth}")
            else:
             st.error("Please Make Sure to provide: Year, Model, Odometer for us to estimate the price of your car!")
 

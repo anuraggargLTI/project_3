@@ -35,6 +35,7 @@ The Luxury Car Buying Platform utilizes the following technologies and framework
    'WEB3_PROVIDER_URI=HTTP://127.0.0.1:7545'
    
 5. Start the Streamlit server: `streamlit run home_page.py`
+6. On seller page after filling up the form hit "Estimate the price of your car" and the price shown in USD should be copied to price field before hitting "Post Your Car!"
 
 ## Demo Credentials
 
