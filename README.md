@@ -23,12 +23,11 @@ The Luxury Car Buying Platform utilizes the following technologies and framework
 - Ethereum (ETH): Cryptocurrency used for transactions.
 - CSV File: Integration with a CSV data file containing luxury car details.
 
-## Installation and Setup
+## Setup
 1. Clone the repository: `git clone https://github.com/yourusername/Ferrari Carvana using blockchain`
 2. Navigate to the project directory: `cd Ferrari Carvana using blockchain`
-3. Install required dependencies using : `pip install `
-4. Start the Streamlit server: `streamlit run app.py`
-5. Open your web browser and visit: `http://localhost:8501`
+3. Start the Streamlit server: `streamlit run app.py`
+4. Open your web browser and visit: `http://localhost:8501`
 
 ## Usage
 1. Upon launching the application, the Streamlit UI will be displayed in your web browser.
