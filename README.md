@@ -24,18 +24,17 @@ The Luxury Car Buying Platform utilizes the following technologies and framework
 - CSV File: Integration with a CSV data file containing luxury car details.
 
 ## Setup
-1. Clone the repository: `git clone https://github.com/yourusername/Ferrari Carvana using blockchain`
-2. Navigate to the project directory: `cd Ferrari Carvana using blockchain`
-3. Start the Streamlit server: `streamlit run app.py`
-4. Open your web browser and visit: `http://localhost:8501`
-5. Update the following environment variables in the `.env` file:
+1. Clone the repository: `git clone https://github.com/anuraggargLTI/project_3`
+2. Navigate to the project directory: `cd project_3`
+3. Open Ganache, update/create .env file in project_3 folder.
 
-   'USER_ADDRESS=0xf7895847Fd092df264C63a035AcC83203AD64344'
+   'USER_ADDRESS= <WALLET ADDRESS FROM GANACHE>'
    
-   'THIRD_PARTY_ADDRESS=0x91e2B17bcc05021fD711352698E51898DCf64C09'
+   'THIRD_PARTY_ADDRESS= <SECOND WALLET ADDRESS FROM GANACHE>'
    
    'WEB3_PROVIDER_URI=HTTP://127.0.0.1:7545'
-
+   
+5. Start the Streamlit server: `streamlit run home_page.py`
 
 ## Demo Credentials
 
@@ -62,6 +61,4 @@ Please note that these are placeholder credentials used for demonstration purpos
 - Francisco Franco (francisco@scalingprofits.io)
 - Michael Blanchette (michael.blanchette3@gmail.com)
 
-## License
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
