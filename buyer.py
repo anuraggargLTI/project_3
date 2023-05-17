@@ -13,7 +13,7 @@ from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode,DataReturnMode
 #import sqlite3
 
 PAGES = {
-    "For Buyers": buyer,
+    "For Buyers": buyer,  
     "For Sellers": seller
 }
 
