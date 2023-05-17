@@ -52,7 +52,3 @@ Contributions are welcome! If you have any ideas, suggestions, or bug reports, p
 ## License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
-## Contact
-For any inquiries or feedback, please contact us at luxurycarplatform@example.com.
-
-
