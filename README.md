@@ -26,7 +26,7 @@ The Luxury Car Buying Platform utilizes the following technologies and framework
 ## Installation and Setup
 1. Clone the repository: `git clone https://github.com/yourusername/Ferrari Carvana using blockchain`
 2. Navigate to the project directory: `cd Ferrari Carvana using blockchain`
-3. Install dependencies: `pip install -r requirements.txt`
+3. Install required dependencies using : `pip install `
 4. Start the Streamlit server: `streamlit run app.py`
 5. Open your web browser and visit: `http://localhost:8501`
 
