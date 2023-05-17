@@ -28,11 +28,11 @@ The Luxury Car Buying Platform utilizes the following technologies and framework
 2. Navigate to the project directory: `cd project_3`
 3. Open Ganache, update/create .env file in project_3 folder.
 
-   'USER_ADDRESS= <WALLET ADDRESS FROM GANACHE>'
+   USER_ADDRESS=FIRST WALLET ADDRESS FROM GANACHE
    
-   'THIRD_PARTY_ADDRESS= <SECOND WALLET ADDRESS FROM GANACHE>'
+   THIRD_PARTY_ADDRESS=SECOND WALLET ADDRESS FROM GANACHE
    
-   'WEB3_PROVIDER_URI=HTTP://127.0.0.1:7545'
+   WEB3_PROVIDER_URI=HTTP://127.0.0.1:7545
    
 5. Start the Streamlit server: `streamlit run home_page.py`
 6. On seller page after filling up the form hit "Estimate the price of your car" and the price shown in USD should be copied to price field before hitting "Post Your Car!"
