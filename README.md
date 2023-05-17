@@ -38,10 +38,6 @@ The Luxury Car Buying Platform utilizes the following technologies and framework
 6. The ML model will provide real-time price predictions to assist buyers in making informed decisions.
 7. The CSV file contains the luxury car data and is integrated into the UI for seamless browsing and search functionality.
 
-## Contributing
-Contributions are welcome! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
-
-
 ## Contributors
 - Anurag Garg (anurag_garg@live.com)
 - Soheil Gityforoze (sg3956@columbia.edu)
